@@ -1,6 +1,25 @@
- import { test, expect } from '@playwright/test';
+import { test, request } from '@playwright/test';
 import { POManager } from '../src/test/pages/POManager';
 import testData from '../src/test/data/testData.json';
+
+let token: string;
+
+test.beforeAll(async () => {
+  const apiContext = await request.newContext();
+  const responseLogin = await apiContext.post(
+    'https://rahulshettyacademy.com/api/ecom/auth/login',
+    {
+      data: {
+        userEmail: testData.userEmail,
+        userPassword: testData.userPassword,
+      },
+    }
+  );
+
+  const loginResponsejson = await responseLogin.json();
+  token = loginResponsejson.token;
+  console.log('Login successful. Token generated.');
+});
 
 test('@Webst Client App login', async ({ page }) => {
   const poManager = new POManager(page);
@@ -11,9 +30,9 @@ test('@Webst Client App login', async ({ page }) => {
   const checkoutPage = poManager.getCheckoutPage();
   const ordersHistoryPage = poManager.getOrdersHistoryPage();
 
-  // 2. Login & Navigate via UI
+  // 2. Login & Navigate
+  await loginPage.setTokenInLocalStorage(token);
   await loginPage.goTo();
-  await loginPage.login(testData.userEmail, testData.userPassword);
 
   // 3. Search and Add Product to Cart
   await dashboardPage.searchProductAddCart(testData.productName);
@@ -26,9 +45,6 @@ test('@Webst Client App login', async ({ page }) => {
   // 5. Select Country & Place Order
   await checkoutPage.selectCountry(testData.countryCode, testData.countryName);
   await checkoutPage.verifyEmail(testData.userEmail);
-
-  // Pause as it was in original script
-  await page.pause();
   await checkoutPage.submitOrder();
 
   // 6. Verify Order ID & View History
@@ -38,7 +54,4 @@ test('@Webst Client App login', async ({ page }) => {
 
   await ordersHistoryPage.navigateToOrders();
   await ordersHistoryPage.verifyOrderPresentAndView(orderId);
-
-  // Pause as it was in original script
-  await page.pause();
 });
