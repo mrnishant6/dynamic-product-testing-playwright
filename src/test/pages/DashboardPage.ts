@@ -2,27 +2,39 @@ import { Page, Locator } from '@playwright/test';
 
 export class DashboardPage {
     readonly page: Page;
-    readonly products: Locator;
-    readonly cartButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
-        this.products = page.locator(".card-body");
-        this.cartButton = page.getByRole('button', { name: '   Cart' });
     }
 
     async searchProductAddCart(productName: string) {
-        const count = await this.products.count();
+        const products = this.page.locator(".card-body");
+        const count = await products.count();
         for (let i = 0; i < count; i++) {
-            const productClicked = await this.products.nth(i).locator('b').textContent();
+            const productClicked = await products.nth(i).locator('b').textContent();
             if (productClicked === productName) {
-                await this.products.nth(i).locator('text =  Add To Cart').click();
+                await products.nth(i).locator('text =  Add To Cart').click();
+                break;
+            }
+        }
+    }
+
+        async searchProductAddCartSauce(productName: string) {
+        const sauceProducts = this.page.locator('.inventory_item');
+        const count = await sauceProducts.count();
+        for (let i = 0; i < count; i++) {
+            const productClicked = await sauceProducts.nth(i).locator('.inventory_item_name').textContent();
+            console.log(`Product ${i}: ${productClicked}`);
+            if (productClicked === productName) {
+                console.log(`Product found: ${productClicked}`);
+                await sauceProducts.nth(i).locator('text =  Add To Cart').click();
                 break;
             }
         }
     }
 
     async navigateToCart() {
-        await this.cartButton.click();
+        const cartBadge = this.page.getByRole('button', { name: '   Cart' });
+        await cartBadge.click();
     }
 }
