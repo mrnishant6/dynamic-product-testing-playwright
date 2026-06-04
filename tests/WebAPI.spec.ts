@@ -16,6 +16,7 @@ test.beforeAll(async () => {
     }
   );
 
+
   const loginResponsejson = await responseLogin.json();
   token = loginResponsejson.token;
   console.log('Login successful. Token generated.');

@@ -4,5 +4,12 @@
     "productName": "ZARA COAT 3",
     "countryCode": "ind",
     "countryName": "India",
-    "successMessage": " Thankyou for the order. "
+    "successMessage": " Thankyou for the order. ",
+    "sauce_userName": "standard_user",
+    "sauce_password": "secret_sauce",
+    "wrong_sauce_userName": "standard_user1",
+    "wrong_sauce_password": "secret_sauce1",
+    "sauce_url": "https://www.saucedemo.com",
+    "sauce_productName": "Sauce Labs Backpack",
+     "sauce_productPrice": "$29.99"
 }

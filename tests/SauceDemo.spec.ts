@@ -1,33 +1,32 @@
 import { test, expect } from '@playwright/test';
 import { Page } from '@playwright/test';
-import { error } from 'console';
+import testData from '../src/test/data/testData.json';
 import { DashboardPage } from '../src/test/pages/DashboardPage';
+import { helper } from '../src/main/utils/helpers';
 
 test.describe('SauceDemo Application Tests', () => {
   let page: Page;
+  let helperObj: helper;
 
-  test.beforeEach(async ({ browser }) => {
+  test.beforeEach(async ({ browser}, testInfo) => {
     page = await browser.newPage();
-    await page.goto('https://www.saucedemo.com');
+    await page.goto(testData.sauce_url);
+    helperObj = new helper(page, testInfo);
   });
 
   test.afterEach(async () => {
     await page.close();
   });
 
-  test('@SauceDemoLogin Login with valid credentials', async () => {
+  test('@SauceDemoLogin Login with valid credentials', async (testInfo) => {
     // Enter username
-    await page.locator('//input[contains(@id,"user-name")]').fill('standard_user');
+    await page.locator('//input[contains(@id,"user-name")]').fill(testData.sauce_userName);
     
     // Enter password
-    await page.locator('//input[contains(@id,"password")]').fill('secret_sauce')
+    await page.locator('//input[contains(@id,"password")]').fill(testData.sauce_password);
 
-    const screenshotLogin = await page.screenshot({fullPage: true})
+    await helperObj.takeScreenshot('screenshotBeforeLogin');
 
-    test.info().attach('screenshotLogin', {
-      body: screenshotLogin,
-      contentType: 'image/png',
-    });
 
     
     
@@ -38,26 +37,19 @@ test.describe('SauceDemo Application Tests', () => {
     await expect(page).toHaveURL(/.*inventory/);
     await expect(page.locator('.inventory_list')).toBeVisible();
 
-    const screenshotInventory = await page.screenshot({fullPage :  true})
-    test.info().attach('screenshotInvemtory', {body : screenshotInventory, contentType : 'image/png'})
+    await helperObj.takeScreenshot('screenshotAfterLogin'); 
+
   });
 
   test('@SauceDemoLoginFail Login with invalid credentials', async () => {
     // Enter username
-    await page.locator('//input[contains(@id,"user-name")]').fill('invalid_user');
+    await page.locator('//input[contains(@id,"user-name")]').fill(testData.wrong_sauce_userName);
     
     // Enter password
-    await page.locator('//input[contains(@id,"password")]').fill('wrong_password')
+    await page.locator('//input[contains(@id,"password")]').fill(testData.wrong_sauce_password);
 
-    const screenshotLogin = await page.screenshot({fullPage: true})
 
-    test.info().attach('screenshotLogin', {
-      body: screenshotLogin,
-      contentType: 'image/png',
-    });
 
-    
-    
     // Click login button
     await page.locator('//input[contains(@id,"login-button")]').click(); 
     // Verify error message appears
@@ -71,8 +63,8 @@ test.describe('SauceDemo Application Tests', () => {
   test('@SauceDemoAddroduct Add product to cart and checkout', async () => {
     // Login first
     const dashboardPage = new DashboardPage(page);  
-    await page.fill('[data-test="username"]', 'standard_user');
-    await page.fill('[data-test="password"]', 'secret_sauce');
+    await page.fill('[data-test="username"]', testData.sauce_userName);
+    await page.fill('[data-test="password"]', testData.sauce_password);
     await page.click('[data-test="login-button"]');
 
     // Wait for inventory to load
