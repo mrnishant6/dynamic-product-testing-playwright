@@ -71,8 +71,6 @@ test.describe('SauceDemo Application Tests', () => {
     await page.waitForSelector('.inventory_item');
     await expect(page).toHaveURL(/.*inventory/);
 
-    await page.pause();
-
    //add product to cart
    await dashboardPage.searchProductAddCartSauce('Sauce Labs Backpack');
 

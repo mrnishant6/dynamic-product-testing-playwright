@@ -3,12 +3,21 @@
   "version": "1.0.0",
   "description": "End-to-end web automation test suite using Playwright. Covers dynamic product selection, form validations, dropdown handling, order placement, and order history validations.",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report",
+    "allure:serve": "allure serve allure-results",
+    "allure:clean": "rimraf allure-results allure-report"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.56.0",
-    "@types/node": "^22.15.30"
+    "@types/node": "^22.15.30",
+    "allure-commandline": "^2.42.1",
+    "allure-playwright": "^3.10.0"
   }
 }

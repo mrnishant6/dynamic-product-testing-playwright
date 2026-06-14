@@ -27,8 +27,6 @@ test('@Webst Client App login', async ({ page }) => {
   await checkoutPage.selectCountry(testData.countryCode, testData.countryName);
   await checkoutPage.verifyEmail(testData.userEmail);
 
-  // Pause as it was in original script
-  await page.pause();
   await checkoutPage.submitOrder();
 
   // 6. Verify Order ID & View History
@@ -38,7 +36,4 @@ test('@Webst Client App login', async ({ page }) => {
 
   await ordersHistoryPage.navigateToOrders();
   await ordersHistoryPage.verifyOrderPresentAndView(orderId);
-
-  // Pause as it was in original script
-  await page.pause();
 });
