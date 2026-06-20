@@ -13,7 +13,7 @@ export class DashboardPage {
         for (let i = 0; i < count; i++) {
             const productClicked = await products.nth(i).locator('b').textContent();
             if (productClicked === productName) {
-                await products.nth(i).locator('text =  Add To Cart').click();
+                await products.nth(i).locator('text=Add To Cart').click();
                 break;
             }
         }
@@ -27,7 +27,7 @@ export class DashboardPage {
             console.log(`Product ${i}: ${productClicked}`);
             if (productClicked === productName) {
                 console.log(`Product found: ${productClicked}`);
-                await sauceProducts.nth(i).locator('text =  Add To Cart').click();
+                await sauceProducts.nth(i).locator('text=Add To Cart').click();
                 break;
             }
         }

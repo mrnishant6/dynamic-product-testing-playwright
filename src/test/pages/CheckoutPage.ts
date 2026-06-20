@@ -23,8 +23,7 @@ export class CheckoutPage {
 
     async verifyProductIsDisplayed(productName: string) {
         await this.checkoutButton.waitFor();
-        const boolProductFound = await this.page.locator('h3', { hasText: productName }).isVisible();
-        expect(boolProductFound).toBeTruthy();
+        await expect(this.page.locator('h3', { hasText: productName })).toBeVisible();
     }
 
     async proceedToCheckout() {

@@ -18,7 +18,7 @@ test.describe('SauceDemo Application Tests', () => {
     await page.close();
   });
 
-  test('@SauceDemoLogin Login with valid credentials', async (testInfo) => {
+  test('@SauceDemoLogin Login with valid credentials', async () => {
     // Enter username
     await page.locator('//input[contains(@id,"user-name")]').fill(testData.sauce_userName);
     

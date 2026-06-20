@@ -16,7 +16,7 @@ test('SauceDemo Application Tests', async ({ page }) => {
   console.log(`Number of travel credit cards: ${travelCardCount}`);
   let cardBullets = page.locator("//div[contains(@class,'sa-card-bullets')]").nth(1);
   await expect(cardBullets).toBeVisible();
-  let specificText = "Welcome benefit of 2,500 IndiGo BluChips Voucher";
+  let specificText = "Welcome benefit of 4,000 IndiGo BluChips Voucher";
   await expect(cardBullets).toContainText(specificText);
   
   // Search for ul and li inside cardBullets
