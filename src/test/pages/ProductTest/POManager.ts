@@ -1,8 +1,8 @@
 import { Page } from '@playwright/test';
-import { LoginPage } from '../../main/pages/LoginPage';
-import { DashboardPage } from '../../test/pages/DashboardPage';
-import { CheckoutPage } from '../../test/pages/CheckoutPage';
-import { OrdersHistoryPage } from '../../test/pages/OrdersHistoryPage';
+import { LoginPage } from '../../../main/pages/LoginPage';
+import { DashboardPage } from './DashboardPage';
+import { CheckoutPage } from './CheckoutPage';
+import { OrdersHistoryPage } from './OrdersHistoryPage';
 
 export class POManager {
     readonly page: Page;
