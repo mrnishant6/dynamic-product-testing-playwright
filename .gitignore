@@ -5,10 +5,29 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-
+/tests-examples/
 # Playwright auth state
 /playwright/.auth/
 
 # Allure — generated report artifacts (never commit these)
 /allure-results/
 /allure-report/
+
+# Playwright reports and caches
+/playwright-report/
+/.playwright-mcp/
+
+# Node and package manager artifacts
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS and editor files
+.DS_Store
+.vscode/
+.idea/
+
+# Environment files
+.env
+.env.*
