@@ -54,11 +54,13 @@ export class KotakHomePage{
 
     async getCardBullets(index: number): Promise<Locator>{
         const card = this.productCards.nth(index);
+        await card.waitFor({ state: 'visible' });
         return card.locator('div.sa-card-bullets');
     }
 
     async getCardBulletText(index: number): Promise<string | null>{
         const bullets = await this.getCardBullets(index);
+        await bullets.waitFor({ state: 'visible' });
         return await bullets.textContent();
     }
 
