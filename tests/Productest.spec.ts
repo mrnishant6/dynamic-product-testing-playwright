@@ -1,5 +1,5 @@
  import { test, expect } from '@playwright/test';
-import { POManager } from '../src/test/ProductTest/pages/POManager';
+import { POManager } from '../src/test/pages/ProductTest/POManager';
 import testData from '../src/test/data/testData.json';
 
 test('@Webst Client App login', async ({ page }) => {
